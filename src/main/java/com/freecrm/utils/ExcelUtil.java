@@ -8,14 +8,14 @@ import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.testng.log4testng.Logger;
+//import org.testng.log4testng.Logger;
 
 public class ExcelUtil {
 
 	private static FileInputStream fis;
 	private static XSSFWorkbook wb;
 	
-	private final static Logger logger = Logger.getLogger(ExcelUtil.class);
+	//private final static Logger logger = Logger.getLogger(ExcelUtil.class);
 	
 	public static Object[][] getAllTestData(String fileName, String Sheetname)
 	{
@@ -27,7 +27,8 @@ public class ExcelUtil {
 				wb = new XSSFWorkbook(fis);
 			} 
 		catch (IOException e) {
-				logger.warn("Data excel not found!!!!");
+				//logger.warn("Data excel not found!!!!");
+				System.out.println("Excel not found");
 			}
 		XSSFSheet sh = wb.getSheet(Sheetname);
 		int rowCount = sh.getPhysicalNumberOfRows();

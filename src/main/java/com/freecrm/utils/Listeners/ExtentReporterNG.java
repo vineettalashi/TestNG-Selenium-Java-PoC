@@ -1,4 +1,4 @@
-package com.freecrm.utils.Listeners;
+/*package com.freecrm.utils.Listeners;
 
 import java.io.File;
 import java.util.Calendar;
@@ -29,8 +29,8 @@ public class ExtentReporterNG implements IReporter {
             Map<String, ISuiteResult> result = suite.getResults();   //ISuiteResult class represents the result of a suite run.
   
             for (ISuiteResult r : result.values()) {
-                ITestContext context = r.getTestContext();            /* ITestContext class defines a test context which contains all the information for a given test run. 
-                														An instance of this context is passed to the test listeners so they can query information about their environment*/
+                ITestContext context = r.getTestContext();             ITestContext class defines a test context which contains all the information for a given test run. 
+                														An instance of this context is passed to the test listeners so they can query information about their environment
   
                 buildTestNodes(context.getPassedTests(), LogStatus.PASS);
                 buildTestNodes(context.getFailedTests(), LogStatus.FAIL);
@@ -71,4 +71,4 @@ public class ExtentReporterNG implements IReporter {
         calendar.setTimeInMillis(millis);
         return calendar.getTime();        
     }
-}
+}*/
