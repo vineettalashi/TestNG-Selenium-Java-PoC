@@ -12,7 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <basedir>C:\Users\Vineet_Talashi\eclipse-workspace\VTAF-Beta\vtafselenium</basedir>
+    <basedir>C:\\Users\\Vineet_Talashi\\eclipse-workspace\\VTAF-Beta\\vtafselenium</basedir>
   </properties>
 
   <dependencies>
