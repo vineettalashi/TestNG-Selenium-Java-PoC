@@ -12,7 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <basedir>C:\\Users\\Vineet_Talashi\\eclipse-workspace\\VTAF-Beta\\vtafselenium</basedir>
+    <outputbasedir>C:\\Users\\Vineet_Talashi\\eclipse-workspace\\VTAF-Beta\\vtafselenium</outputbasedir>
   </properties>
 
   <dependencies>
@@ -78,10 +78,10 @@
 		      <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-surefire-plugin</artifactId>
-		        <version>2.19.1</version>
-		          <configuration>
-			         
-			        </configuration>
+		        <version>2.20.1</version>
+		        <configuration>
+		        	<reportsDirectory></reportsDirectory>
+		        </configuration> 
 		      </plugin>
 		      
 		      <plugin>
@@ -97,17 +97,18 @@
 	  
   </build>
   
-  <reporting>
-  	<plugins>
+   <reporting>
+    <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>2.19.1</version>
-        <configuration>
-          <outputDirectory>${basedir}/target/newsite</outputDirectory>
-        </configuration>
+        <version>2.20.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>2.1</version>
       </plugin>
     </plugins>
-  
   </reporting>
 </project>
