@@ -41,7 +41,7 @@ public class ExtentTestNGReportBuilder {
     }
 
     
-    public synchronized void afterMethod(ITestResult result, WebDriver driver) {
+    public synchronized void generateReport(ITestResult result, WebDriver driver) {
     	 if (result.getStatus() == ITestResult.FAILURE)
 	        {     	
 	        	try {

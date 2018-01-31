@@ -56,9 +56,9 @@ public class FreeCRMLoginNew extends BaseTest
 	}
 	
 	@AfterMethod
-	public synchronized void afterMethod(ITestResult result) {
+	public void afterMethod(ITestResult result) {
 	    
-		afterMethod(result,driver);	        
+		generateReport(result,driver);	        
 		System.out.println("Tearing Down..");
 		driver.quit();
 	}
