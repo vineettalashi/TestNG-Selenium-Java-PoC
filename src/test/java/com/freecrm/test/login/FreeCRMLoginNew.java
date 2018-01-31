@@ -4,31 +4,26 @@ import java.util.HashMap;
 
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.freecrm.po.FCHomePage;
 import com.freecrm.utils.ExcelUtil;
-import com.freecrm.utils.reports.ExtentManager;
 
-
-
-public class FreeCRMLogin extends BaseTest
+@Listeners(com.freecrm.utils.Listeners.ExtentReporterNG.class)
+public class FreeCRMLoginNew extends BaseTest 
 {	
-	ExtentReports extent;
-	ExtentTest test;
+	/*ExtentReports extent;
+	ExtentTest reporter;*/
 	
-	@BeforeClass(alwaysRun=true)
+	@BeforeMethod(alwaysRun=true)
 	void init() {
-		extent = ExtentManager.GetExtent();
+		/*extent = new ExtentReports("./extent.html");
+		reporter = extent.startTest(this.getClass().getSimpleName());*/		
 		System.out.println("Driver Initialization Started...");
 		super.initializeSetUp();
 		launchApplication();
@@ -43,38 +38,29 @@ public class FreeCRMLogin extends BaseTest
 	}
 	
 	@Test(description="Free CRM Login Test" , dataProvider="getTestData")
-	public void FreeCRMLoginTest(HashMap<String, String> testdata)
+	public void FreeCRMLoginTestPositive(HashMap<String, String> testdata) throws Exception
 	{	
-		try {
-			
-		test = extent.createTest("FreeCRMLoginTestPositive", "FreeCRMLogin");
+
 		FCHomePage homepage = PageFactory.initElements(driver, FCHomePage.class);
 		homepage.enterUserName(testdata.get("Username"));
 		homepage.enterPassword(testdata.get("Password"));
 		homepage.clickLoginButton();
-		test.log(Status.PASS, "Enter username and Password and Click on login");
+		Reporter.log("Login Step : Enter UN and PWD and Click on Login");
 		homepage.switchToMainPanelFrame();
-		Assert.assertEquals(homepage.verifyCRMPROLogoText(), false);
-		test.log(test.getStatus(), "verifyCRMPROLogoText");
-		
+		Reporter.log("Login Step : switchToMainPanelFrame");
+		Assert.assertEquals(homepage.verifyCRMPROLogoText(), true);
+		Reporter.log("Login Step : verifyCRMPROLogoText");
 	}
 	
-		catch(Exception e)
-		{
-			test.log(Status.ERROR, e.getMessage());
-		}
-		
-	}
-	
-	@AfterClass
-	void tearDown() 
+	@AfterMethod
+	void tearDown()
 	{
 		System.out.println("Tearing Down..");
-		//extent.removeTest(test);
+		/*extent.endTest(reporter);
 		extent.flush();
-      //extent.close();
-	  //driver.get("file:///C:/Users/vinee/OneDrive/vtafselenium/test-output/extent.html");
-	    driver.quit();
+	    extent.close();*/
+	    //driver.get("C:\\Users\\Vineet_Talashi\\eclipse-workspace\\VTAF-Beta\\vtafselenium\\extent.html");
+		//driver.quit();
 	}
 	
 }

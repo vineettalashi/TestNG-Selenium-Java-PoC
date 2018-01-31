@@ -23,6 +23,7 @@
         <!-- top, bottom -->
         <testViewChartLocation>bottom</testViewChartLocation>
         
+        
         <!-- custom javascript -->
         <scripts>
             <![CDATA[

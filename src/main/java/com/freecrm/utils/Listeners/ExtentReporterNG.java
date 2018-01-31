@@ -1,4 +1,4 @@
-/*package com.freecrm.utils.Listeners;
+package com.freecrm.utils.Listeners;
 
 import java.io.File;
 import java.util.Calendar;
@@ -11,6 +11,7 @@ import org.testng.IResultMap;
 import org.testng.ISuite;
 import org.testng.ISuiteResult;
 import org.testng.ITestContext;
+import org.testng.ITestNGListener;
 import org.testng.ITestResult;
 import org.testng.xml.XmlSuite;
 
@@ -19,18 +20,18 @@ import com.relevantcodes.extentreports.ExtentTest;
 
 import com.relevantcodes.extentreports.LogStatus;
 
-public class ExtentReporterNG implements IReporter {
+public class ExtentReporterNG implements IReporter{
     private ExtentReports extent;
   
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         extent = new ExtentReports(outputDirectory + File.separator + "ExtentReportTestNG.html", true);
-  
+        extent.loadConfig(new File("./config.xml"));
         for (ISuite suite : suites) {
-            Map<String, ISuiteResult> result = suite.getResults();   //ISuiteResult class represents the result of a suite run.
+            Map<String, ISuiteResult> result = suite.getResults();     //ISuiteResult class represents the result of a suite run.
   
             for (ISuiteResult r : result.values()) {
-                ITestContext context = r.getTestContext();             ITestContext class defines a test context which contains all the information for a given test run. 
-                														An instance of this context is passed to the test listeners so they can query information about their environment
+                ITestContext context = r.getTestContext();             //ITestContext class defines a test context which contains all the information for a given test run. 
+                														//An instance of this context is passed to the test listeners so they can query information about their environment
   
                 buildTestNodes(context.getPassedTests(), LogStatus.PASS);
                 buildTestNodes(context.getFailedTests(), LogStatus.FAIL);
@@ -71,4 +72,4 @@ public class ExtentReporterNG implements IReporter {
         calendar.setTimeInMillis(millis);
         return calendar.getTime();        
     }
-}*/
+}
