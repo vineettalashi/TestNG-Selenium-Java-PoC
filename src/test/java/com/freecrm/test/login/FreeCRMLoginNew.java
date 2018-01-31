@@ -4,26 +4,19 @@ import java.util.HashMap;
 
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.freecrm.po.FCHomePage;
 import com.freecrm.utils.ExcelUtil;
 
-@Listeners(com.freecrm.utils.Listeners.ExtentReporterNG.class)
+
 public class FreeCRMLoginNew extends BaseTest 
 {	
-	/*ExtentReports extent;
-	ExtentTest reporter;*/
-	
 	@BeforeMethod(alwaysRun=true)
 	void init() {
-		/*extent = new ExtentReports("./extent.html");
-		reporter = extent.startTest(this.getClass().getSimpleName());*/		
 		System.out.println("Driver Initialization Started...");
 		super.initializeSetUp();
 		launchApplication();
@@ -33,34 +26,36 @@ public class FreeCRMLoginNew extends BaseTest
 	@DataProvider(name="getTestData")
 	public Object[][] getAllTestData()
 	{
-		
 		return ExcelUtil.getAllTestData("testdata", "Sheet1");
 	}
 	
-	@Test(description="Free CRM Login Test" , dataProvider="getTestData")
-	public void FreeCRMLoginTest(HashMap<String, String> testdata) throws Exception
+	@Test(description="Free CRM Login Test" , dataProvider="getTestData" ,groups= {"Author:Vineet"})
+	public void FreeCRMLoginTest(HashMap<String, String> testdata)
 	{	
-
+	
 		FCHomePage homepage = PageFactory.initElements(driver, FCHomePage.class);
+		
 		homepage.enterUserName(testdata.get("Username"));
+		test.get().log(test.get().getStatus(), "Step 1 :: Enter Username:: "+testdata.get("Username"));
+		
 		homepage.enterPassword(testdata.get("Password"));
+		test.get().log(test.get().getStatus(), "Step 2 ::  Enter Password:: ********");
+		
 		homepage.clickLoginButton();
-		Reporter.log("Login Step : Enter UN and PWD and Click on Login");
+		test.get().log(test.get().getStatus(), "Step 3 ::  Click on Submit buton");
+		
 		homepage.switchToMainPanelFrame();
-		Reporter.log("Login Step : switchToMainPanelFrame");
-		Assert.assertEquals(homepage.verifyCRMPROLogoText(), true);
-		Reporter.log("Login Step : verifyCRMPROLogoText");
+		test.get().log(test.get().getStatus(), "Step 4 :: Switch to Main panel");
+		
+		Assert.assertEquals(homepage.verifyCRMPROLogoText(), false);
+		test.get().log(test.get().getStatus(), "Step 5 :: verifyCRMPROLogoText");
 	}
 	
 	@AfterMethod
 	void tearDown()
 	{
 		System.out.println("Tearing Down..");
-		/*extent.endTest(reporter);
-		extent.flush();
-	    extent.close();*/
-	    //driver.get("C:\\Users\\Vineet_Talashi\\eclipse-workspace\\VTAF-Beta\\vtafselenium\\extent.html");
-		//driver.quit();
+		driver.quit();
 	}
 	
 }

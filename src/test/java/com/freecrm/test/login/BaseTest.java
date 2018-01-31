@@ -5,8 +5,9 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 
 import com.freecrm.utils.ConfigProvider;
+import com.freecrm.utils.Listeners.ExtentTestNGReportBuilder;
 
-public class BaseTest {
+public class BaseTest extends ExtentTestNGReportBuilder{
 	
 	protected WebDriver driver;
 
