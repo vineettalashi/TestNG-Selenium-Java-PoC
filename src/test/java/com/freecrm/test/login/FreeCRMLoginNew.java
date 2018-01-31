@@ -1,9 +1,11 @@
 package com.freecrm.test.login;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -16,7 +18,8 @@ import com.freecrm.utils.ExcelUtil;
 public class FreeCRMLoginNew extends BaseTest 
 {	
 	@BeforeMethod(alwaysRun=true)
-	void init() {
+	void initialize(Method method) {
+		beforeMethod(method);
 		System.out.println("Driver Initialization Started...");
 		super.initializeSetUp();
 		launchApplication();
@@ -36,24 +39,26 @@ public class FreeCRMLoginNew extends BaseTest
 		FCHomePage homepage = PageFactory.initElements(driver, FCHomePage.class);
 		
 		homepage.enterUserName(testdata.get("Username"));
-		test.get().log(test.get().getStatus(), "Step 1 :: Enter Username:: "+testdata.get("Username"));
+		Reporter.get().log(Reporter.get().getStatus(), "Step 1 :: Enter Username:: "+testdata.get("Username"));
 		
 		homepage.enterPassword(testdata.get("Password"));
-		test.get().log(test.get().getStatus(), "Step 2 ::  Enter Password:: ********");
+		Reporter.get().log(Reporter.get().getStatus(), "Step 2 ::  Enter Password:: ********");
 		
 		homepage.clickLoginButton();
-		test.get().log(test.get().getStatus(), "Step 3 ::  Click on Submit buton");
+		Reporter.get().log(Reporter.get().getStatus(), "Step 3 ::  Click on Submit buton");
 		
 		homepage.switchToMainPanelFrame();
-		test.get().log(test.get().getStatus(), "Step 4 :: Switch to Main panel");
+		Reporter.get().log(Reporter.get().getStatus(), "Step 4 :: Switch to Main panel");
 		
 		Assert.assertEquals(homepage.verifyCRMPROLogoText(), false);
-		test.get().log(test.get().getStatus(), "Step 5 :: verifyCRMPROLogoText");
+		Reporter.get().log(Reporter.get().getStatus(), "Step 5 :: verifyCRMPROLogoText");
+		
 	}
 	
 	@AfterMethod
-	void tearDown()
-	{
+	public synchronized void afterMethod(ITestResult result) {
+	    
+		afterMethod(result,driver);	        
 		System.out.println("Tearing Down..");
 		driver.quit();
 	}

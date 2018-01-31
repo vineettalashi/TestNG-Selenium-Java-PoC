@@ -10,6 +10,7 @@ import com.freecrm.utils.Listeners.ExtentTestNGReportBuilder;
 public class BaseTest extends ExtentTestNGReportBuilder{
 	
 	protected WebDriver driver;
+	//protected ExtentTestNGReportBuilder report;
 
 	
 	public void initializeSetUp()
@@ -26,6 +27,10 @@ public class BaseTest extends ExtentTestNGReportBuilder{
 
 	}
 
+	public void generateTestReport()
+	{
+		
+	}
 	
 
 }

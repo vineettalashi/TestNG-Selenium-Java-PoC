@@ -1,7 +1,9 @@
 package com.freecrm.utils.Listeners;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -13,12 +15,13 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.freecrm.utils.GetScreenShot;
 
 public class ExtentTestNGReportBuilder {
 
 	protected static ExtentReports extent;
 	protected static ThreadLocal<ExtentTest> parentTest = new ThreadLocal<ExtentTest>();
-    protected static ThreadLocal<ExtentTest> test = new ThreadLocal<ExtentTest>();
+    protected static ThreadLocal<ExtentTest> Reporter = new ThreadLocal<ExtentTest>();
 
 	@BeforeSuite
 	public void beforeSuite() {
@@ -27,25 +30,31 @@ public class ExtentTestNGReportBuilder {
 	
     @BeforeClass
     public synchronized void beforeClass() {
-        ExtentTest parent = extent.createTest(getClass().getName());
+        ExtentTest parent = extent.createTest(getClass().getSimpleName());
         parentTest.set(parent);
     }
 
-    @BeforeMethod
+   
     public synchronized void beforeMethod(Method method) {
-        ExtentTest child = ((ExtentTest) parentTest.get()).createNode(method.getName());
-        test.set(child);
+        ExtentTest child = parentTest.get().createNode(method.getName());
+        Reporter.set(child);
     }
 
-    @AfterMethod
-    public synchronized void afterMethod(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE)
-            ((ExtentTest) test.get()).fail(result.getThrowable());
-        else if (result.getStatus() == ITestResult.SKIP)
-            ((ExtentTest) test.get()).skip(result.getThrowable());
-        else
-            ((ExtentTest) test.get()).pass("Test passed");
-
+    
+    public synchronized void afterMethod(ITestResult result, WebDriver driver) {
+    	 if (result.getStatus() == ITestResult.FAILURE)
+	        {     	
+	        	try {
+	        		Reporter.get().fail(result.getThrowable());
+					Reporter.get().addScreenCaptureFromPath(GetScreenShot.capture(driver, "Failed Screenshot"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	        }
+	        else if (result.getStatus() == ITestResult.SKIP)
+	        	Reporter.get().skip(result.getThrowable());
+	        else
+	        	Reporter.get().pass("Test passed");
         extent.flush();
     }
 }
@@ -63,7 +72,7 @@ public class ExtentTestNGReportBuilder {
     
     public static ExtentReports createInstance(String fileName) {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
-        htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
         htmlReporter.config().setChartVisibilityOnOpen(true);
         htmlReporter.config().setTheme(Theme.STANDARD);
         htmlReporter.config().setDocumentTitle(fileName);
