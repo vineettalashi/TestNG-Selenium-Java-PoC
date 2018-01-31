@@ -27,7 +27,7 @@ public class ExtentReporterNG implements IReporter{
         extent = new ExtentReports(outputDirectory + File.separator + "ExtentReportTestNG.html", true);
         extent.loadConfig(new File("./config.xml"));
         for (ISuite suite : suites) {
-            Map<String, ISuiteResult> result = suite.getResults();     //ISuiteResult class represents the result of a suite run.
+            Map<String, ISuiteResult> result = suite.getResults();      //ISuiteResult class represents the result of a suite run.
   
             for (ISuiteResult r : result.values()) {
                 ITestContext context = r.getTestContext();             //ITestContext class defines a test context which contains all the information for a given test run. 

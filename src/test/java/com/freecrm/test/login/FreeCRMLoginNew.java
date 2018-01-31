@@ -38,7 +38,7 @@ public class FreeCRMLoginNew extends BaseTest
 	}
 	
 	@Test(description="Free CRM Login Test" , dataProvider="getTestData")
-	public void FreeCRMLoginTestPositive(HashMap<String, String> testdata) throws Exception
+	public void FreeCRMLoginTest(HashMap<String, String> testdata) throws Exception
 	{	
 
 		FCHomePage homepage = PageFactory.initElements(driver, FCHomePage.class);
