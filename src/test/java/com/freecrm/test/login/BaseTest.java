@@ -27,7 +27,6 @@ public class BaseTest extends ExtentTestNGReportBuilder{
 
 	}
 	
-	//testing branch pull request
 	
 
 }
