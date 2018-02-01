@@ -39,19 +39,19 @@ public class FreeCRMLoginNew extends BaseTest
 		FCHomePage homepage = PageFactory.initElements(driver, FCHomePage.class);
 		
 		homepage.enterUserName(testdata.get("Username"));
-		Reporter.get().log(Reporter.get().getStatus(), "Step 1 :: Enter Username:: "+testdata.get("Username"));
+		Reporter().log(Reporter.get().getStatus(), "Step 1 :: Enter Username:: "+testdata.get("Username"));
 		
 		homepage.enterPassword(testdata.get("Password"));
-		Reporter.get().log(Reporter.get().getStatus(), "Step 2 ::  Enter Password:: ********");
+		Reporter().log(Reporter.get().getStatus(), "Step 2 ::  Enter Password:: ********");
 		
 		homepage.clickLoginButton();
-		Reporter.get().log(Reporter.get().getStatus(), "Step 3 ::  Click on Submit buton");
+		Reporter().log(Reporter.get().getStatus(), "Step 3 ::  Click on Submit buton");
 		
 		homepage.switchToMainPanelFrame();
-		Reporter.get().log(Reporter.get().getStatus(), "Step 4 :: Switch to Main panel");
+		Reporter().log(Reporter.get().getStatus(), "Step 4 :: Switch to Main panel");
 		
 		Assert.assertEquals(homepage.verifyCRMPROLogoText(), false);
-		Reporter.get().log(Reporter.get().getStatus(), "Step 5 :: verifyCRMPROLogoText");
+		Reporter().log(Reporter.get().getStatus(), "Step 5 :: verifyCRMPROLogoText");
 		
 	}
 	
