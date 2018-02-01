@@ -27,10 +27,6 @@ public class BaseTest extends ExtentTestNGReportBuilder{
 
 	}
 
-	public void generateTestReport()
-	{
-		
-	}
 	
 
 }
