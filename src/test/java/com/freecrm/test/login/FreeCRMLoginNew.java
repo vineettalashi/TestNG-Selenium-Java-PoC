@@ -8,11 +8,11 @@ import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.freecrm.po.FCHomePage;
-import com.freecrm.utils.ExcelUtil;
+import com.freecrm.utils.ExcelDataInput;
+
 
 
 public class FreeCRMLoginNew extends BaseTest 
@@ -20,26 +20,28 @@ public class FreeCRMLoginNew extends BaseTest
 	@BeforeMethod(alwaysRun=true)
 	void initialize(Method method) {
 		beforeMethod(method);
-		System.out.println("Driver Initialization Started...");
-		super.initializeSetUp();
-		launchApplication();
-		Assert.assertEquals(driver.getTitle(), "#1 Free CRM for Any Business: Online Customer Relationship Software");
+		System.out.println("Driver Initialization Started...");		
 	}
 	
-	@DataProvider(name="getTestData")
+	/*@DataProvider(name="getTestData")
 	public Object[][] getAllTestData()
 	{
 		return ExcelUtil.getAllTestData("testdata", "Sheet1");
-	}
+	}*/
 	
-	@Test(description="Free CRM Login Test" , dataProvider="getTestData" ,groups= {"Author:Vineet"})
+	@ExcelDataInput(filename="testdata.xlsx" , sheetname="Sheet1")
+	@Test(description="Free CRM Login Test" , groups= {"Author:Vineet"})
 	public void FreeCRMLoginTest(HashMap<String, String> testdata)
 	{	
 	
+		super.initializeSetUp();
+		launchApplication();
+		Assert.assertEquals(driver.getTitle(), "#1 Free CRM for Any Business: Online Customer Relationship Software");
+		
 		FCHomePage homepage = PageFactory.initElements(driver, FCHomePage.class);
 		
 		homepage.enterUserName(testdata.get("Username"));
-		Reporter().log(Reporter.get().getStatus(), "Step 1 :: Enter Username:: "+testdata.get("Username"));
+		Reporter().log(Reporter().getStatus(), "Step 1 :: Enter Username:: "+testdata.get("Username"));
 		
 		homepage.enterPassword(testdata.get("Password"));
 		Reporter().log(Reporter.get().getStatus(), "Step 2 ::  Enter Password:: ********");
@@ -58,7 +60,7 @@ public class FreeCRMLoginNew extends BaseTest
 	@AfterMethod
 	public void afterMethod(ITestResult result) {
 	    
-		generateReport(result,driver);	        
+		generateReport(result,driver);
 		System.out.println("Tearing Down..");
 		driver.quit();
 	}

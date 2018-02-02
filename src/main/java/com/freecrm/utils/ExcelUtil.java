@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.annotations.DataProvider;
 //import org.testng.log4testng.Logger;
 
 public class ExcelUtil {
@@ -16,27 +17,37 @@ public class ExcelUtil {
 	private static XSSFWorkbook wb;
 	
 	//private final static Logger logger = Logger.getLogger(ExcelUtil.class);
+	/*@DataProvider(name="getTestData")
+	public Object[][] getAlTestData()
+	{
+		return ExcelUtil.getAllTestData("testdata", "Sheet1");
+	}*/
 	
-	public static Object[][] getAllTestData(String fileName, String Sheetname)
+	@DataProvider(name="getTestData")
+	public static Object[][] getAllTestData(String filename, String sheetname)
 	{
 		List<Object[]> results = new ArrayList<Object[]>();
-		HashMap<String, String> input = new HashMap<String, String>();
+		HashMap<String, String> input = null;
 		
 		try {
-				fis = new FileInputStream(Constants.datafilesPath + "/" + fileName + ".xlsx");
+				fis = new FileInputStream(Constants.datafilesPath + "/" + filename + ".xlsx");
 				wb = new XSSFWorkbook(fis);
 			} 
 		catch (IOException e) {
 				//logger.warn("Data excel not found!!!!");
 				System.out.println("Excel not found");
 			}
-		XSSFSheet sh = wb.getSheet(Sheetname);
+		XSSFSheet sh = wb.getSheet(sheetname);
 		int rowCount = sh.getPhysicalNumberOfRows();
 		int colCount = sh.getRow(0).getLastCellNum();
 		for(int row = 0; row<rowCount-1;row++)
 		{
-		for (int i = 0; i < colCount; i++) {
-			input.put(sh.getRow(0).getCell(i).getStringCellValue(), sh.getRow(1).getCell(i).getStringCellValue());
+		
+		input = new HashMap<String, String>();
+		
+		for (int i = 0; i < colCount; i++) 
+		{		
+			input.put(sh.getRow(0).getCell(i).getStringCellValue(),sh.getRow(row+1).getCell(i).getStringCellValue() );
 		}
 		
 		results.add(new Object[]{input});
