@@ -30,11 +30,11 @@
 	    <version>3.6.0</version>
 	</dependency>
     
- <!--    <dependency>
+     <dependency>
 	    <groupId>com.canoo.webtest</groupId>
 	    <artifactId>webtest</artifactId>
 	    <version>3.0</version>
-	</dependency> -->
+	</dependency> 
 
 	<dependency>
 	    <groupId>com.relevantcodes</groupId>
