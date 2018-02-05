@@ -1,4 +1,4 @@
-package com.freecrm.utils.Listeners;
+package com.freecrm.utils.reports;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -7,11 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.reporter.configuration.ChartLocation;
-import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.freecrm.utils.GetScreenShot;
 
 public class ExtentTestNGReportBuilder {
@@ -22,7 +20,7 @@ public class ExtentTestNGReportBuilder {
 
 	@BeforeSuite
 	public void beforeSuite() {
-		extent = ExtentManagerNew.getInstance("./extent.html");
+		extent = ExtentReportManager.getInstance("./extent.html");
 	}
 	
     public static ExtentTest Reporter() {
@@ -47,7 +45,7 @@ public class ExtentTestNGReportBuilder {
 	        {     	
 	        	try {
 	        		Reporter.get().fail(result.getThrowable());
-					Reporter.get().addScreenCaptureFromPath(GetScreenShot.capture(driver, "Failed Screenshot"));
+					Reporter.get().addScreenCaptureFromPath(GetScreenShot.capture(driver, result.getName()));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -59,31 +57,3 @@ public class ExtentTestNGReportBuilder {
         extent.flush();
     }
 }
-
- class ExtentManagerNew {
-    
-    private static ExtentReports extent;
-    
-    public static ExtentReports getInstance(String fileName) {
-    	if (extent == null)
-    		createInstance(fileName);
-    	
-        return extent;
-    }
-    
-    public static ExtentReports createInstance(String fileName) {
-        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
-        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
-        htmlReporter.config().setChartVisibilityOnOpen(true);
-        htmlReporter.config().setTheme(Theme.STANDARD);
-        htmlReporter.config().setDocumentTitle(fileName);
-        htmlReporter.config().setEncoding("utf-8");
-        htmlReporter.config().setReportName(fileName);
-        
-        extent = new ExtentReports();
-        extent.attachReporter(htmlReporter);
-        
-        return extent;
-    }
-}
-

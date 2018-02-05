@@ -65,7 +65,7 @@ public class PageObjectUtils {
 	
 	public static void highlightElement(WebDriver driver, WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].style.backgroundColor=\"yellow\";", element);
+		js.executeScript("arguments[0].style.backgroundColor=\"green\";", element);
 	}
 
 }

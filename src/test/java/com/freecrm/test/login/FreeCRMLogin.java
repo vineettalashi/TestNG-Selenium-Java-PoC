@@ -1,38 +1,28 @@
 package com.freecrm.test.login;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.freecrm.helper.base.BaseTest;
 import com.freecrm.po.FCHomePage;
 import com.freecrm.utils.ExcelUtil;
-import com.freecrm.utils.reports.ExtentManager;
 
 
 
 public class FreeCRMLogin extends BaseTest
 {	
-	ExtentReports extent;
-	ExtentTest test;
-	
-	@BeforeClass(alwaysRun=true)
-	void init() {
-		extent = ExtentManager.GetExtent();
-		System.out.println("Driver Initialization Started...");
-		super.initializeSetUp();
-		launchApplication();
-		Assert.assertEquals(driver.getTitle(), "#1 Free CRM for Any Business: Online Customer Relationship Software");
+	@BeforeMethod
+	void initialize(Method method) {
+		beforeMethod(method);
+		System.out.println("Driver Initialization Started 1...");		
 	}
 	
 	@DataProvider(name="getTestData")
@@ -45,36 +35,37 @@ public class FreeCRMLogin extends BaseTest
 	@Test(description="Free CRM Login Test" , dataProvider="getTestData")
 	public void FreeCRMLoginTest(HashMap<String, String> testdata)
 	{	
-		try {
-			
-		test = extent.createTest("FreeCRMLoginTestPositive", "FreeCRMLogin");
+		super.initializeSetUp();
+		launchApplication();
+		Assert.assertEquals(driver.getTitle(), "#1 Free CRM for Any Business: Online Customer Relationship Software");
+		
 		FCHomePage homepage = PageFactory.initElements(driver, FCHomePage.class);
+		
 		homepage.enterUserName(testdata.get("Username"));
+		Reporter().log(Reporter().getStatus(), "Step 1 :: Enter Username:: "+testdata.get("Username"));
+		
 		homepage.enterPassword(testdata.get("Password"));
-		homepage.clickLoginButton();
-		test.log(Status.PASS, "Enter username and Password and Click on login");
+		Reporter().log(Reporter().getStatus(), "Step 2 :: Enter Password:: "+testdata.get("Password"));
+		
+		homepage.clickLoginButton();		
+		Reporter().log(Reporter.get().getStatus(), "Step 3 ::  Click on Submit buton");
+		
 		homepage.switchToMainPanelFrame();
-		Assert.assertEquals(homepage.verifyCRMPROLogoText(), false);
-		test.log(test.getStatus(), "verifyCRMPROLogoText");
+		Reporter().log(Reporter.get().getStatus(), "Step 4 :: Switch to Main panel");
+		
+		Assert.assertEquals(homepage.verifyCRMPROLogoText(), true);
+		Reporter().log(Reporter.get().getStatus(), "Step 5 :: verify CRMPRO Logo Text");
+		
+
 		
 	}
 	
-		catch(Exception e)
-		{
-			test.log(Status.ERROR, e.getMessage());
-		}
-		
-	}
-	
-	@AfterClass
-	void tearDown() 
-	{
+	@AfterMethod
+	public void afterMethod(ITestResult result) {
+	    
+		generateReport(result,driver);
 		System.out.println("Tearing Down..");
-		//extent.removeTest(test);
-		extent.flush();
-      //extent.close();
-	  //driver.get("file:///C:/Users/vinee/OneDrive/vtafselenium/test-output/extent.html");
-	    driver.quit();
+		driver.quit();
 	}
 	
 }

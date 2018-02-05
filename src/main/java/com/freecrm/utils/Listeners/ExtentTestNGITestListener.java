@@ -12,7 +12,7 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class ExtentTestNGITestListener implements ITestListener {
 
-	private static ExtentReports extent = ExtentManager.createInstance("extent.html");
+	private static ExtentReports extent = ExtentManagers.createInstance("extent.html");
 	private static ThreadLocal parentTest = new ThreadLocal();
     private static ThreadLocal test = new ThreadLocal();
 	
@@ -54,7 +54,7 @@ public class ExtentTestNGITestListener implements ITestListener {
 	}
 }
 
-class ExtentManager {
+class ExtentManagers {
     
     private static ExtentReports extent;
     

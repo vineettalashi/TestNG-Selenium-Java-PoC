@@ -1,60 +1,32 @@
 package com.freecrm.helper.base;
 
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-/*import org.openqa.selenium.firefox.FirefoxDriver;*/
-import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import com.freecrm.utils.ConfigProvider;
+import com.freecrm.utils.reports.ExtentTestNGReportBuilder;
 
+public class BaseTest extends ExtentTestNGReportBuilder{
+	
+	protected WebDriver driver;
+	//protected ExtentTestNGReportBuilder report;
 
-public class BaseTest {
 	
-	public WebDriver driver;
-	
-	
-	public void initialize()
-	{	
+	public void initializeSetUp()
+	{
 		
-		driver = getWebDriver(ConfigProvider.get("browser"));
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver = DriverManger.getDriver(ConfigProvider.get("browser"));
 		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 	}
 	
-	public WebDriver getWebDriver(String browser)
-	{
-		if(browser.equalsIgnoreCase("IE")){
-			
-					System.setProperty("webdriver.ie.driver", ConfigProvider.get("IEDriverPath"));
-				   driver = new InternetExplorerDriver();
-		}
+	public void launchApplication() {
 		
-		else if(browser.equalsIgnoreCase("chrome")){
-			System.setProperty("webdriver.chrome.driver", ConfigProvider.get("chromeDriverPath"));
-			ChromeOptions chromeOptions = new ChromeOptions();
-			chromeOptions.addArguments("--disable-infobars");
-			driver = new ChromeDriver(chromeOptions);
-		}
-		else if(browser.equalsIgnoreCase("firefox")){
-						System.setProperty("webdriver.gecko.driver", ConfigProvider.get("FirefoxDriverPath"));
-					   driver = new FirefoxDriver();
-		}
-		else
-			{
-			System.out.println("Invalid Browser Selection. Please choose from IE|chrome|firefox");
-		 			
-		}
-		
-		return driver;
-				
+		driver.get(ConfigProvider.get("url"));
+
 	}
 	
-	public void launchApp(String URL)
-	{
-		driver.get(URL);
-	}
+	
 
 }

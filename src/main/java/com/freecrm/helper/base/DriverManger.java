@@ -1,4 +1,4 @@
-package com.freecrm.test.login;
+package com.freecrm.helper.base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
