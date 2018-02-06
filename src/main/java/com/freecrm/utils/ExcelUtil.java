@@ -8,22 +8,13 @@ import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.testng.annotations.DataProvider;
-//import org.testng.log4testng.Logger;
 
 public class ExcelUtil {
 
 	private static FileInputStream fis;
 	private static XSSFWorkbook wb;
 	
-	//private final static Logger logger = Logger.getLogger(ExcelUtil.class);
-	/*@DataProvider(name="getTestData")
-	public Object[][] getAlTestData()
-	{
-		return ExcelUtil.getAllTestData("testdata", "Sheet1");
-	}*/
 	
-	@DataProvider(name="getTestData")
 	public static Object[][] getAllTestData(String filename, String sheetname)
 	{
 		List<Object[]> results = new ArrayList<Object[]>();
@@ -53,7 +44,7 @@ public class ExcelUtil {
 		results.add(new Object[]{input});
 		}
 		
-		return results.toArray(new Object[0][]);
+		return results.toArray(new Object[0][]);  //Variable must provide either dimension expressions or an array initializer
 	}
 
 }

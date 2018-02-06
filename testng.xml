@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite">
-  <test thread-count="5" name="Test">
+  <test name="testing">
     <classes>
       <class name="com.freecrm.test.login.FreeCRMLogin"/>
+      <class name="com.freecrm.test.login.FreeCRMLoginNew"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

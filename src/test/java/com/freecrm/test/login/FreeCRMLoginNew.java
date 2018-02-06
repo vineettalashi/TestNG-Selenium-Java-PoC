@@ -31,7 +31,6 @@ public class FreeCRMLoginNew extends BaseTest
 		return ExcelUtil.getAllTestData("testdata", "Sheet1");
 	}
 	
-	//@ExcelDataInput(filename="testdata.xlsx" , sheetname="Sheet1")
 	@Test(description="Free CRM Login Test" ,dataProvider="getTestData", groups= {"Author:Vineet"})
 	public void FreeCRMLoginTestNew(HashMap<String, String> testdata)
 	{	
@@ -58,6 +57,7 @@ public class FreeCRMLoginNew extends BaseTest
 		Reporter().log(Reporter.get().getStatus(), "Step 5 :: verify CRMPRO Logo Text");
 		
 	}
+	
 	
 	@AfterMethod
 	public void afterMethod(ITestResult result) {
